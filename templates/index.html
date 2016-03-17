@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>BEHOLD THE MIGHTY ANACHRONOMETER</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div id='container'>
+		<h2>behold the mighty anachronometer</h2>
+		<form action="/submit_text" method="post">
+			<div class='input-item'>
+				<label for='date'>year</label>
+				<input id='date' name='date'></input>
+			</div>
+			<div class='input-item'>
+				<label for='text'>text</label>
+				<input id='text' name='text'></input>
+			</div>
+			<button>find anachronisms</button>
+		</form>
+	</div>
+</body>
+</html>
