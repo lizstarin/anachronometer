@@ -1,17 +1,13 @@
 and|conjunction:before 12th century|noun:1949
-contact|noun:1626|verb:1834|adjective:1859
-services|noun:13th century|transitive verb:1528|adjective:1837|noun:1530
-some|adjective:before 12th century|pronoun, singular or plural in construction:Before 12th Century|adverb:Before 12th Century
-a|noun:Before 12th Century|indefinite article:before 12th century|preposition:before 12th century|verb:14th century|preposition:15th century
 z|noun:Before 12th Century|abbreviation:1967|noun:1967
+wrote|verb:before 12th century
 write|verb:before 12th century
-write|verb:before 12th century
-wrote
-click|verb:1581|noun:1611
-information|noun:14th Century
-people|noun:13th century|verb:15th century
+us|pronoun, plural in construction:before 12th century
+we|pronoun, plural in construction:before 12th century
+ran|verb:before 12th century|noun:14th Century|adjective:1774
 run|verb:before 12th century|noun:14th Century|adjective:1774
-run|verb:before 12th century|noun:14th Century|adjective:1774
-ran
-hello|noun:1877
 waitstaff|noun:1983
+at|preposition:before 12th century|noun:1955
+an|indefinite article:before 12th century|preposition:Before 12th Century|conjunction:12th Century
+hotels|noun:1765
+hotel|noun:1765

@@ -3,10 +3,6 @@ import urllib2, re
 
 f = open('static/testdates.txt', 'w')
 
-def get_word_dates():
-	words = open('static/test.txt').readlines()
-	return [get_word_date(word.strip()) for word in words]
-
 def find_date(definition_tag):
 	try:
 		date_card = definition_tag.find_next('div', {'class' : ['first-use-box', 'origin-box']}) #.find('p').string
@@ -15,41 +11,43 @@ def find_date(definition_tag):
 		else:
 			return date_card.find(text = re.compile('First Known Use:')).split(': ')[1]
 	except:
-		pass
+		raise
 
-def find_definition_info(definition_tag):
-	try:
-		part_of_speech = definition_tag.find_next('div', {'class' : 'word-attributes'}).find('span', {'class' : 'main-attr'}).find('em').string
-		date = find_date(definition_tag)
-		if date: 
-			return '|' + str(part_of_speech) + ':' + str(date)
-		else:
-			return ''
+def get_file_line(word):
+	file_line = ''
+
+	url = 'http://www.merriam-webster.com/dictionary/' + word
+	html_page = urllib2.urlopen(url)
+	soup = BeautifulSoup(html_page, 'lxml')
+
+	try:  
+		base_word = soup.find('a', {'class' : 'ct-link'}).string # Is the word a tense or different case of some base word?
+		return get_file_line(base_word)							 # So recurse by looking up the base word.
+
 	except:
-		base_word = definition_tag.find_next('p', {'class' : 'definition-inner-item'}).find('a').string
-		get_word_date(base_word)
-
-def get_word_date(word):
-	print word
-
-	try:
-		file_line = word
-
-		url = 'http://www.merriam-webster.com/dictionary/' + word
-		html_page = urllib2.urlopen(url)
-		soup = BeautifulSoup(html_page, 'lxml')
 		definitions = soup.findAll('div', {'class' : 'word-and-pronunciation'})
-
 		for d in definitions:
 			try:
-				file_line += find_definition_info(d)
+				part_of_speech = d.parent.parent.find('span', {'class' : 'main-attr'}).find('em').string
+				try:
+					date = find_date(d)
+					file_line += '|' + str(part_of_speech) + ':' + str(date)
+				except: 
+					pass
 			except:
 				pass
 
-		f.write(file_line + '\n')
+	return file_line
 
-	except Exception, e:
-		print e
+def get_word_dates():
+	words = [el.strip() for el in open('static/test.txt').readlines()]
+	for word in words:
+		print word
 
+		try:	
+			file_line = word + get_file_line(word)
+			f.write(file_line + '\n')
+		except Exception, e:
+			print e
 
 get_word_dates()
