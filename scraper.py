@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 import urllib2, re
 
-f = open('static/testdates.txt', 'w')
+f = open('static/5kdates.txt', 'w')
 
 def find_date(definition_tag):
 	try:
-		date_card = definition_tag.find_next('div', {'class' : ['first-use-box', 'origin-box']}) #.find('p').string
+		date_card = definition_tag.find_next('div', {'class' : ['first-use-box', 'origin-box']})
 		if 'first-use-box' in date_card.get('class'):
 			return date_card.find('p').string
 		else:
@@ -40,7 +40,7 @@ def get_file_line(word):
 	return file_line
 
 def get_word_dates():
-	words = [el.strip() for el in open('static/test.txt').readlines()]
+	words = [el.strip() for el in open('static/5k.txt').readlines()]
 	for word in words:
 		print word
 
@@ -49,5 +49,3 @@ def get_word_dates():
 			f.write(file_line + '\n')
 		except Exception, e:
 			print e
-
-get_word_dates()
