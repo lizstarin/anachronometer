@@ -1,6 +1,7 @@
 import string, os, datetime
 from textblob import TextBlob
 import data_handler
+from date_parser import WordDate
 
 MW_API_KEY = os.environ.get('MW_API_KEY')
 
@@ -93,8 +94,10 @@ def get_dates(text):
 		if pos == '':
 			print 'ignore'
 		else:
-			dates = [data_handler.get_date_by_word_string_and_pos(word[0].lower(), p) for p in pos]
-			print dates
+			dates = [el for el in [data_handler.get_date_by_word_string_and_pos(word[0].lower(), p) for p in pos] if el]
+			filtered_dates = dates if dates else [None]
+
+			print min(filtered_dates, key=lambda date: WordDate(date).latest)
 		print '\n'
 
 get_dates(sample_text)

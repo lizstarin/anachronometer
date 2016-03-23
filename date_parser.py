@@ -12,13 +12,17 @@ class WordDate(object):
 		return True if p.match(self.date_string) else False
 
 	def __find_earliest(self):
-		if self.__is_year():
+		if self.date_string == None:
+			return None
+		elif self.__is_year():
 			return int(self.date_string)
 		else:
 			return self.__parse()[0]
 
 	def __find_latest(self):
-		if self.__is_year():
+		if self.date_string == None:
+			return None
+		elif self.__is_year():
 			return int(self.date_string)
 		else: 
 			return self.__parse()[1]
@@ -55,3 +59,6 @@ class WordDate(object):
 			return True
 		else:
 			return False
+
+d = WordDate(None)
+print d.latest

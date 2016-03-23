@@ -57,7 +57,6 @@ def get_words_by_word_string(word_string):
 
 def get_date_by_word_string_and_pos(word_string, pos):
 	try:
-		print 'pos: ' + pos
 		result = query_db('select earliest_use from word_dates where word_string = "' + word_string + '" and part_of_speech = "' + pos + '"')
 		if result and len(result):
 			return result[0][0]
