@@ -27,18 +27,31 @@ class WordDate(object):
 		p = re.compile('[\d]*[a-z]{2} [Cc]entury')
 		q = re.compile('[Bb]efore')
 		if p.search(self.date_string):
+			century = int(re.search(r'\d+', self.date_string).group(0))
 			if q.search(self.date_string):
-				max_date = (int(self.date_string.split()[1][0:2]) - 1) * 100
+				max_date = (century - 1) * 100
 				return (None, max_date)
 			else:
-				max_date = int(self.date_string.split()[0][0:2]) * 100
+				max_date = century * 100
 				min_date = max_date - 99
 				return (min_date, max_date)
 		else:
 			return (None, None)
 
-	def is_earlier_than(word_date):
-		return 'blah'
+	def is_earlier_than(self, word_date):
+		if self.latest < word_date.earliest:
+			return True
+		else:
+			return False
 
-d = WordDate('before 12th century')
-print d.latest
+	def is_later_than(self, word_date):
+		if self.earliest > word_date.latest:
+			return True
+		else:
+			return False
+
+	def is_concurrent_with(self, word_date):
+		if not self.is_earlier_than(word_date) and not word_date.is_earlier_than(self):
+			return True
+		else:
+			return False
