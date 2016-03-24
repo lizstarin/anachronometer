@@ -59,6 +59,3 @@ class WordDate(object):
 			return True
 		else:
 			return False
-
-d = WordDate(None)
-print d.latest

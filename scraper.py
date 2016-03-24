@@ -16,26 +16,29 @@ def find_date(definition_tag):
 def get_file_line(word):
 	file_line = ''
 
-	url = 'http://www.merriam-webster.com/dictionary/' + word
-	html_page = urllib2.urlopen(url)
-	soup = BeautifulSoup(html_page, 'lxml')
+	try: 
+		url = 'http://www.merriam-webster.com/dictionary/' + word
+		html_page = urllib2.urlopen(url)
+		soup = BeautifulSoup(html_page, 'lxml')
 
-	try:  
-		base_word = soup.find('a', {'class' : 'ct-link'}).string # Is the word a tense or different case of some base word?
-		return get_file_line(base_word)							 # So recurse by looking up the base word.
+		try:  
+			base_word = soup.find('a', {'class' : 'ct-link'}).string # Is the word a tense or different case of some base word?
+			return get_file_line(base_word)							 # So recurse by looking up the base word.
 
-	except:
-		definitions = soup.findAll('div', {'class' : 'word-and-pronunciation'})
-		for d in definitions:
-			try:
-				part_of_speech = d.parent.parent.find('span', {'class' : 'main-attr'}).find('em').string
+		except:
+			definitions = soup.findAll('div', {'class' : 'word-and-pronunciation'})
+			for d in definitions:
 				try:
-					date = find_date(d)
-					file_line += '|' + str(part_of_speech) + ':' + str(date)
-				except: 
+					part_of_speech = d.parent.parent.find('span', {'class' : 'main-attr'}).find('em').string
+					try:
+						date = find_date(d)
+						file_line += '|' + str(part_of_speech) + ':' + str(date)
+					except: 
+						pass
+				except:
 					pass
-			except:
-				pass
+	except:
+		print '404'
 
 	return file_line
 
